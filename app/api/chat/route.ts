@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { geminiModel } from "@/lib/gemini";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 interface ChatMessage {
   role: "user" | "model";
@@ -23,6 +23,11 @@ export async function POST(req: NextRequest) {
       include: { category: true },
     });
 
+    const totalProducts = products.length;
+    const inStock = products.filter(p => p.stock > 0).length;
+    const outOfStock = products.filter(p => p.stock === 0).length;
+    const totalValue = products.reduce((sum, p) => sum + p.price * p.stock, 0);
+
     const catalogContext = products.map((p) => {
       let specs = {};
       try { specs = JSON.parse(p.specs); } catch {}
@@ -37,13 +42,21 @@ export async function POST(req: NextRequest) {
       };
     });
 
-    const systemInstruction = `You are a knowledgeable and friendly sales assistant for an electronics store. You are an expert in technology products. Here is the complete product catalog with full specifications:
+    const systemInstruction = `You are a knowledgeable and friendly sales assistant for an electronics store. You are an expert in technology products.
+
+CATALOG STATISTICS:
+- Total products: ${totalProducts}
+- In stock: ${inStock}
+- Out of stock: ${outOfStock}
+- Total catalog value: $${totalValue.toFixed(2)}
+
+Here is the complete product catalog with full specifications:
 
 ${JSON.stringify(catalogContext, null, 2)}
 
 Your capabilities:
 - Answer questions about product availability and stock
-- Compare products against each other using their real specifications (e.g., "Is the HyperX better than the Logitech?")
+- Compare products against each other using their real specifications
 - Recommend products based on customer needs and budget
 - Explain technical specifications in simple terms
 - Suggest alternatives if a product is out of stock
@@ -58,7 +71,10 @@ Rules:
 - Keep answers concise but helpful
 - If asked about a product not in the catalog, say you don't carry it but suggest what you do have in that category`;
 
-    const chat = geminiModel.startChat({
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+
+    const chat = model.startChat({
       systemInstruction: { role: "system", parts: [{ text: systemInstruction }] },
       history: history.map((msg) => ({
         role: msg.role,
@@ -70,7 +86,8 @@ Rules:
     const reply = result.response.text();
 
     return NextResponse.json({ reply });
-  } catch {
+  } catch (error) {
+    console.error("Chat error:", error);
     return NextResponse.json(
       { error: "Failed to process chat message" },
       { status: 500 }

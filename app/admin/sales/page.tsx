@@ -6,9 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Loader2, ShoppingCart, TrendingUp, DollarSign, Package } from "lucide-react";
+import { Loader2, ShoppingCart, TrendingUp, DollarSign, Package, Download } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { downloadCSV } from "@/lib/csv";
 
 interface Product {
   id: string;
@@ -132,7 +133,7 @@ export default function SalesPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-24">
-        <Loader2 className="h-8 w-8 text-[#6C47FF] animate-spin" />
+        <Loader2 className="h-8 w-8 text-emerald-500 animate-spin" />
       </div>
     );
   }
@@ -196,7 +197,23 @@ export default function SalesPage() {
       </div>
 
       <div>
-        <h2 className="text-base font-semibold text-zinc-900 mb-4 tracking-tight">Sales History</h2>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-base font-semibold text-zinc-900 tracking-tight">Sales History</h2>
+          <button onClick={() => {
+            const rows = sales.map(s => ({
+              Date: new Date(s.createdAt).toLocaleDateString(),
+              Product: s.product?.name ?? "Unknown",
+              Brand: s.product?.brand ?? "Unknown",
+              Quantity: s.quantity,
+              "Unit Price": s.unitPrice,
+              Total: s.total,
+              Profit: (s.total - ((s.product?.costPrice ?? 0) * s.quantity)).toFixed(2),
+            }));
+            downloadCSV(rows, "sales-history");
+          }} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-zinc-200 text-xs font-medium text-zinc-600 hover:bg-zinc-50 transition-colors active:scale-95">
+            <Download className="h-3.5 w-3.5" /> Export CSV
+          </button>
+        </div>
         <div className="rounded-2xl border border-zinc-200/60 bg-white overflow-hidden shadow-sm">
           <Table>
             <TableHeader>

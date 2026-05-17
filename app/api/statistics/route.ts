@@ -1,21 +1,34 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
+    const { searchParams } = new URL(req.url);
+    const fromParam = searchParams.get("from");
+    const toParam = searchParams.get("to");
+
+    const fromDate = fromParam ? new Date(fromParam) : null;
+    const toDate = toParam ? new Date(toParam + "T23:59:59") : null;
+
     const products = await db.product.findMany();
     const sales = await db.sale.findMany({
       include: { product: { include: { category: true } } },
       orderBy: { createdAt: "desc" },
     });
 
-    const totalRevenue = sales.reduce((sum, s) => sum + s.total, 0);
-    const totalCost = sales.reduce((sum, s) => {
+    const filteredSales = sales.filter((s) => {
+      if (fromDate && s.createdAt < fromDate) return false;
+      if (toDate && s.createdAt > toDate) return false;
+      return true;
+    });
+
+    const totalRevenue = filteredSales.reduce((sum, s) => sum + s.total, 0);
+    const totalCost = filteredSales.reduce((sum, s) => {
       const product = products.find(p => p.id === s.productId);
       return sum + (product ? product.costPrice * s.quantity : 0);
     }, 0);
     const totalProfit = totalRevenue - totalCost;
-    const totalUnitsSold = sales.reduce((sum, s) => sum + s.quantity, 0);
+    const totalUnitsSold = filteredSales.reduce((sum, s) => sum + s.quantity, 0);
 
     const now = new Date();
     const dailyData: Record<string, { revenue: number; cost: number; profit: number }> = {};
@@ -27,7 +40,7 @@ export async function GET() {
       dailyData[key] = { revenue: 0, cost: 0, profit: 0 };
     }
 
-    sales.forEach((s) => {
+    filteredSales.forEach((s) => {
       const dateKey = s.createdAt.toISOString().split("T")[0];
       if (dailyData[dateKey]) {
         const product = products.find(p => p.id === s.productId);
@@ -46,7 +59,7 @@ export async function GET() {
     }));
 
     const productSales: Record<string, number> = {};
-    sales.forEach((s) => {
+    filteredSales.forEach((s) => {
       const name = s.product?.name ?? "Unknown";
       productSales[name] = (productSales[name] || 0) + s.quantity;
     });
@@ -57,7 +70,7 @@ export async function GET() {
       .map(([name, units]) => ({ name, units }));
 
     const categorySales: Record<string, number> = {};
-    sales.forEach((s) => {
+    filteredSales.forEach((s) => {
       const catName = s.product?.category?.name ?? "Uncategorized";
       categorySales[catName] = (categorySales[catName] || 0) + s.total;
     });
@@ -72,7 +85,7 @@ export async function GET() {
       monthlyData[key] = 0;
     }
 
-    sales.forEach((s) => {
+    filteredSales.forEach((s) => {
       const key = s.createdAt.toLocaleDateString("en-US", { month: "short", year: "2-digit" });
       if (monthlyData[key] !== undefined) {
         monthlyData[key] += s.total;

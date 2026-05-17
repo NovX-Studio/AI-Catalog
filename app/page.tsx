@@ -1,14 +1,17 @@
+import Link from "next/link";
+import Image from "next/image";
 import { db } from "@/lib/db";
 import { ProductGrid } from "@/components/catalog/ProductGrid";
 import { SearchBar } from "@/components/catalog/SearchBar";
 import { ChatWidget } from "@/components/catalog/ChatWidget";
 import { ContactSection } from "@/components/catalog/ContactSection";
 import { NavbarLogo } from "@/components/catalog/NavbarLogo";
+import { CompareBar } from "@/components/catalog/CompareBar";
 
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const [products, categories] = await Promise.all([
+  const [rawProducts, categories] = await Promise.all([
     db.product.findMany({
       orderBy: { createdAt: "desc" },
     }),
@@ -16,6 +19,9 @@ export default async function HomePage() {
       orderBy: { name: "asc" },
     }),
   ]);
+
+  const products = rawProducts.map((p) => ({ ...p, createdAt: p.createdAt.toISOString() }));
+  const topProducts = products.filter((p) => p.available && p.stock > 0).slice(0, 4);
 
   return (
     <div className="min-h-screen flex flex-col bg-zinc-50">
@@ -26,9 +32,14 @@ export default async function HomePage() {
             <div className="flex-1 max-w-md mx-auto">
               <SearchBar />
             </div>
-            <a href="/admin/login" className="text-sm text-zinc-500 hover:text-emerald-600 transition-colors font-medium shrink-0">
-              Admin
-            </a>
+            <div className="flex items-center gap-3">
+              <Link href="/compare" className="text-sm text-zinc-500 hover:text-emerald-600 transition-colors font-medium">
+                Compare
+              </Link>
+              <a href="/admin/login" className="text-sm text-zinc-500 hover:text-emerald-600 transition-colors font-medium shrink-0">
+                Admin
+              </a>
+            </div>
           </div>
         </div>
       </header>
@@ -73,6 +84,42 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {topProducts.length > 0 && (
+        <section className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+          <div className="mb-6">
+            <h2 className="text-xl font-bold text-zinc-900 tracking-tight">Featured Products</h2>
+            <p className="text-sm text-zinc-500 mt-1">Our top picks for you</p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {topProducts.map((product) => (
+              <Link key={product.id} href={`/product/${product.id}`} className="group bg-white rounded-2xl overflow-hidden border border-zinc-200/60 transition-all duration-300 hover:shadow-[0_8px_30px_-12px_rgba(0,0,0,0.12)] hover:-translate-y-0.5">
+                <div className="relative aspect-[4/3] bg-zinc-100">
+                  {product.imageUrl ? (
+                    <Image src={product.imageUrl} alt={product.name} fill className="object-cover transition-transform duration-500 group-hover:scale-105" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 33vw, 25vw" />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-zinc-300">
+                      <svg className="h-10 w-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                  )}
+                  <div className="absolute top-2.5 right-2.5">
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-500/90 text-white backdrop-blur-sm shadow-sm">
+                      Featured
+                    </span>
+                  </div>
+                </div>
+                <div className="p-4">
+                  <p className="text-[10px] font-medium text-emerald-600 uppercase tracking-wider mb-0.5">{product.brand}</p>
+                  <h3 className="text-sm font-semibold text-zinc-900 leading-snug mb-1 line-clamp-1">{product.name}</h3>
+                  <p className="text-base font-bold text-zinc-900 tracking-tight">${product.price.toFixed(2)}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
       <main id="catalog" className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-16">
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-zinc-900 tracking-tight">All Products</h2>
@@ -89,6 +136,7 @@ export default async function HomePage() {
         </div>
       </footer>
       <ChatWidget />
+      <CompareBar />
     </div>
   );
 }
