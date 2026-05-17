@@ -15,25 +15,18 @@ export default function AdminLayout({
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen bg-[#FAFAFA]">
-      {/* Desktop sidebar */}
+    <div className="flex min-h-screen bg-zinc-50">
       <div className="hidden md:flex shrink-0">
         <Sidebar />
       </div>
 
       <div className="flex flex-col flex-1 min-w-0">
-        {/* Mobile header */}
-        <header className="md:hidden flex items-center justify-between px-4 py-3 bg-[#0F0A1E] text-white">
+        <header className="md:hidden flex items-center justify-between px-4 py-3 bg-zinc-950 text-white">
           <div className="flex items-center gap-2">
-            <div
-              className="w-7 h-7 rounded-lg flex items-center justify-center"
-              style={{
-                background: "linear-gradient(135deg, #6C47FF 0%, #7C3AED 100%)",
-              }}
-            >
+            <div className="w-7 h-7 rounded-lg bg-emerald-500 flex items-center justify-center">
               <Package className="h-3.5 w-3.5 text-white" />
             </div>
-            <span className="font-bold text-sm">AI Catalog</span>
+            <span className="font-bold text-sm">Catalyx</span>
           </div>
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger
@@ -46,7 +39,7 @@ export default function AdminLayout({
             </SheetTrigger>
             <SheetContent
               side="left"
-              className="p-0 w-64 bg-[#0F0A1E] border-white/10"
+              className="p-0 w-64 bg-zinc-950 border-white/5"
               showCloseButton={false}
             >
               <Sidebar />
@@ -54,7 +47,7 @@ export default function AdminLayout({
           </Sheet>
         </header>
 
-        <main className="flex-1 p-6">{children}</main>
+        <main className="flex-1 p-6 lg:p-8">{children}</main>
       </div>
     </div>
   );

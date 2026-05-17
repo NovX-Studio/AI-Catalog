@@ -64,7 +64,7 @@ export default function StatisticsPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  const COLORS = ["#6C47FF", "#10B981", "#F59E0B", "#EF4444", "#3B82F6", "#8B5CF6", "#EC4899"];
+  const COLORS = ["#059669", "#10B981", "#34D399", "#6EE7B7", "#A7F3D0", "#D1FAE5", "#ECFDF5"];
 
   if (loading) {
     return (
@@ -78,12 +78,12 @@ export default function StatisticsPage() {
     return (
       <div className="max-w-6xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-[#111827]" style={{ letterSpacing: "-0.02em" }}>Statistics</h1>
-          <p className="text-sm text-[#6B7280] mt-0.5">Sales analytics and insights.</p>
+          <h1 className="text-2xl font-bold text-zinc-900 tracking-tight">Statistics</h1>
+          <p className="text-sm text-zinc-500 mt-0.5">Sales analytics and insights.</p>
         </div>
-        <div className="flex flex-col items-center justify-center py-24 text-gray-400">
-          <BarChart3Icon className="h-14 w-14 mb-4 text-gray-300" />
-          <p className="text-lg font-semibold text-gray-500">No sales recorded yet</p>
+        <div className="flex flex-col items-center justify-center py-24 text-zinc-400">
+          <BarChart3Icon className="h-14 w-14 mb-4 text-zinc-300" />
+          <p className="text-lg font-semibold text-zinc-500">No sales recorded yet</p>
           <p className="text-sm mt-1">Go to Sales to register your first sale.</p>
         </div>
       </div>
@@ -93,8 +93,8 @@ export default function StatisticsPage() {
   return (
     <div className="max-w-6xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-[#111827]" style={{ letterSpacing: "-0.02em" }}>Statistics</h1>
-        <p className="text-sm text-[#6B7280] mt-0.5">Sales analytics and insights.</p>
+        <h1 className="text-2xl font-bold text-zinc-900 tracking-tight">Statistics</h1>
+        <p className="text-sm text-zinc-500 mt-0.5">Sales analytics and insights.</p>
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
@@ -102,23 +102,23 @@ export default function StatisticsPage() {
           { label: "Total Revenue", value: `$${totals.revenue.toFixed(2)}`, icon: DollarSign, color: "bg-emerald-50 text-emerald-600" },
           { label: "Total Cost", value: `$${totals.cost.toFixed(2)}`, icon: TrendingDown, color: "bg-red-50 text-red-500" },
           { label: "Net Profit", value: `$${totals.profit.toFixed(2)}`, icon: TrendingUp, color: totals.profit >= 0 ? "bg-emerald-50 text-emerald-600" : "bg-red-50 text-red-500" },
-          { label: "Units Sold", value: totals.unitsSold, icon: Package, color: "bg-[#F5F2FF] text-[#6C47FF]" },
+          { label: "Units Sold", value: totals.unitsSold, icon: Package, color: "bg-emerald-50 text-emerald-600" },
         ].map(({ label, value, icon: Icon, color }) => (
-          <div key={label} className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
+          <div key={label} className="bg-white rounded-2xl p-5 border border-zinc-200/60 shadow-sm">
             <div className="flex items-center justify-between mb-3">
               <div className={cn("w-9 h-9 rounded-xl flex items-center justify-center", color)}>
                 <Icon className="h-4.5 w-4.5" />
               </div>
             </div>
-            <p className="text-2xl font-bold text-[#111827]" style={{ letterSpacing: "-0.02em" }}>{value}</p>
-            <p className="text-xs text-[#6B7280] mt-0.5 font-medium">{label}</p>
+            <p className="text-2xl font-bold text-zinc-900 tracking-tight">{value}</p>
+            <p className="text-xs text-zinc-500 mt-0.5 font-medium">{label}</p>
           </div>
         ))}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
-          <h3 className="text-sm font-semibold text-[#111827] mb-4">Revenue vs Cost vs Profit (Last 30 Days)</h3>
+        <div className="bg-white rounded-2xl p-6 border border-zinc-200/60 shadow-sm">
+          <h3 className="text-sm font-semibold text-zinc-900 mb-4 tracking-tight">Revenue vs Cost vs Profit (Last 30 Days)</h3>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={dailyData}>
               <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
@@ -127,26 +127,26 @@ export default function StatisticsPage() {
               <Tooltip />
               <Bar dataKey="revenue" fill="#10B981" name="Revenue" radius={[4, 4, 0, 0]} />
               <Bar dataKey="cost" fill="#EF4444" name="Cost" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="profit" fill="#6C47FF" name="Profit" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="profit" fill="#059669" name="Profit" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
 
-        <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
-          <h3 className="text-sm font-semibold text-[#111827] mb-4">Top 5 Most Sold Products</h3>
+        <div className="bg-white rounded-2xl p-6 border border-zinc-200/60 shadow-sm">
+          <h3 className="text-sm font-semibold text-zinc-900 mb-4 tracking-tight">Top 5 Most Sold Products</h3>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={topProducts} layout="vertical">
               <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
               <XAxis type="number" tick={{ fontSize: 11 }} />
               <YAxis dataKey="name" type="category" tick={{ fontSize: 11 }} width={120} />
               <Tooltip />
-              <Bar dataKey="units" fill="#6C47FF" name="Units Sold" radius={[0, 4, 4, 0]} />
+              <Bar dataKey="units" fill="#059669" name="Units Sold" radius={[0, 4, 4, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
 
-        <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
-          <h3 className="text-sm font-semibold text-[#111827] mb-4">Sales by Category</h3>
+        <div className="bg-white rounded-2xl p-6 border border-zinc-200/60 shadow-sm">
+          <h3 className="text-sm font-semibold text-zinc-900 mb-4 tracking-tight">Sales by Category</h3>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie data={categoryData} cx="50%" cy="50%" innerRadius={60} outerRadius={100} dataKey="value" nameKey="name" label={(entry: any) => `${entry.name} ${((entry.percent ?? 0) * 100).toFixed(0)}%`}>
@@ -159,15 +159,15 @@ export default function StatisticsPage() {
           </ResponsiveContainer>
         </div>
 
-        <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
-          <h3 className="text-sm font-semibold text-[#111827] mb-4">Revenue Over Time (Last 12 Months)</h3>
+        <div className="bg-white rounded-2xl p-6 border border-zinc-200/60 shadow-sm">
+          <h3 className="text-sm font-semibold text-zinc-900 mb-4 tracking-tight">Revenue Over Time (Last 12 Months)</h3>
           <ResponsiveContainer width="100%" height={300}>
             <AreaChart data={monthlyRevenue}>
               <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
               <XAxis dataKey="month" tick={{ fontSize: 11 }} />
               <YAxis tick={{ fontSize: 11 }} />
               <Tooltip />
-              <Area type="monotone" dataKey="revenue" stroke="#6C47FF" fill="#6C47FF" fillOpacity={0.15} strokeWidth={2} />
+              <Area type="monotone" dataKey="revenue" stroke="#059669" fill="#059669" fillOpacity={0.15} strokeWidth={2} />
             </AreaChart>
           </ResponsiveContainer>
         </div>

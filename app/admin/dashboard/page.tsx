@@ -6,7 +6,6 @@ import { cn } from "@/lib/utils";
 import {
   Package,
   PlusCircle,
-  TrendingUp,
   AlertCircle,
   CheckCircle2,
   DollarSign,
@@ -29,7 +28,7 @@ export default async function DashboardPage() {
       label: "Total Products",
       value: totalProducts,
       icon: Package,
-      color: "bg-[#F5F2FF] text-[#6C47FF]",
+      color: "bg-emerald-50 text-emerald-600",
     },
     {
       label: "In Stock",
@@ -53,16 +52,12 @@ export default async function DashboardPage() {
 
   return (
     <div className="max-w-6xl mx-auto">
-      {/* Page header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1
-            className="text-2xl font-bold text-[#111827]"
-            style={{ letterSpacing: "-0.02em" }}
-          >
+          <h1 className="text-2xl font-bold text-zinc-900 tracking-tight">
             Dashboard
           </h1>
-          <p className="text-sm text-[#6B7280] mt-0.5">
+          <p className="text-sm text-zinc-500 mt-0.5">
             Manage your product catalog
           </p>
         </div>
@@ -70,7 +65,7 @@ export default async function DashboardPage() {
           href="/admin/products/new"
           className={cn(
             buttonVariants(),
-            "bg-[#6C47FF] hover:bg-[#5B3AE8] text-white inline-flex items-center gap-1.5 border-0 shadow-sm"
+            "bg-emerald-500 hover:bg-emerald-600 text-white inline-flex items-center gap-1.5 border-0 shadow-sm"
           )}
         >
           <PlusCircle className="h-4 w-4" />
@@ -78,12 +73,11 @@ export default async function DashboardPage() {
         </Link>
       </div>
 
-      {/* Stats cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {stats.map(({ label, value, icon: Icon, color }) => (
           <div
             key={label}
-            className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm"
+            className="bg-white rounded-2xl p-5 border border-zinc-200/60 shadow-sm"
           >
             <div className="flex items-center justify-between mb-3">
               <div
@@ -94,25 +88,17 @@ export default async function DashboardPage() {
               >
                 <Icon className="h-4.5 w-4.5" />
               </div>
-              <TrendingUp className="h-3.5 w-3.5 text-gray-300" />
             </div>
-            <p
-              className="text-2xl font-bold text-[#111827]"
-              style={{ letterSpacing: "-0.02em" }}
-            >
+            <p className="text-2xl font-bold text-zinc-900 tracking-tight">
               {value}
             </p>
-            <p className="text-xs text-[#6B7280] mt-0.5 font-medium">{label}</p>
+            <p className="text-xs text-zinc-500 mt-1 font-medium">{label}</p>
           </div>
         ))}
       </div>
 
-      {/* Product table */}
       <div>
-        <h2
-          className="text-base font-semibold text-[#111827] mb-4"
-          style={{ letterSpacing: "-0.01em" }}
-        >
+        <h2 className="text-base font-semibold text-zinc-900 mb-4 tracking-tight">
           All Products
         </h2>
         <ProductTable products={products} />

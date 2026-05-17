@@ -37,15 +37,15 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-zinc-50 px-4">
       <Card className="w-full max-w-sm shadow-lg">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-2">
-            <div className="bg-indigo-100 rounded-full p-3">
-              <Store className="h-6 w-6 text-indigo-600" />
+            <div className="bg-emerald-50 rounded-full p-3">
+              <Store className="h-6 w-6 text-emerald-600" />
             </div>
           </div>
-          <CardTitle className="text-2xl">Admin Login</CardTitle>
+          <CardTitle className="text-2xl tracking-tight">Admin Login</CardTitle>
           <CardDescription>Sign in to manage your catalog</CardDescription>
         </CardHeader>
         <CardContent>
@@ -74,7 +74,7 @@ export default function LoginPage() {
                 disabled={loading}
               />
             </div>
-            <Button type="submit" className="w-full bg-indigo-600 hover:bg-indigo-700" disabled={loading}>
+            <Button type="submit" className="w-full bg-emerald-500 hover:bg-emerald-600" disabled={loading}>
               {loading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />

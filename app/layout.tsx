@@ -1,17 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { GeistSans, GeistMono } from "geist/font";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
 export const metadata: Metadata = {
-  title: "AI Catalog",
-  description: "Smart product catalog powered by AI",
+  title: "Catalyx",
+  description: "Curated product catalog with AI-powered recommendations",
 };
 
 export default function RootLayout({
@@ -20,8 +14,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} h-full`}>
-      <body className="min-h-full flex flex-col">
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable} h-full`}>
+      <body className="min-h-full flex flex-col antialiased">
         {children}
         <Toaster richColors position="top-right" />
       </body>

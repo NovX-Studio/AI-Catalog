@@ -187,18 +187,18 @@ export function ProductForm({ initialData, mode }: ProductFormProps) {
   }
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+    <div className="bg-white rounded-2xl border border-zinc-100 shadow-sm p-6">
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <Label className="text-sm font-medium text-[#111827]">Product Image</Label>
-            <div className="flex gap-1 bg-gray-100 rounded-lg p-0.5">
+              <Label className="text-sm font-medium text-zinc-900">Product Image</Label>
+            <div className="flex gap-1 bg-zinc-100 rounded-lg p-0.5">
               <button
                 type="button"
                 onClick={() => setImageMode("upload")}
                 className={cn(
                   "flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium transition-all",
-                  imageMode === "upload" ? "bg-white text-[#111827] shadow-sm" : "text-gray-500 hover:text-gray-700"
+                  imageMode === "upload" ? "bg-white text-zinc-900 shadow-sm" : "text-zinc-500 hover:text-zinc-700"
                 )}
               >
                 <Upload className="h-3 w-3" /> Upload
@@ -208,7 +208,7 @@ export function ProductForm({ initialData, mode }: ProductFormProps) {
                 onClick={() => setImageMode("url")}
                 className={cn(
                   "flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium transition-all",
-                  imageMode === "url" ? "bg-white text-[#111827] shadow-sm" : "text-gray-500 hover:text-gray-700"
+                  imageMode === "url" ? "bg-white text-zinc-900 shadow-sm" : "text-zinc-500 hover:text-zinc-700"
                 )}
               >
                 <LinkIcon className="h-3 w-3" /> URL
@@ -224,22 +224,22 @@ export function ProductForm({ initialData, mode }: ProductFormProps) {
               onDrop={handleDrop}
               className={cn(
                 "relative border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all",
-                dragOver ? "border-[#6C47FF] bg-[#F5F2FF]" : "border-gray-200 hover:border-[#6C47FF]/50 hover:bg-gray-50"
+                dragOver ? "border-emerald-500 bg-emerald-50" : "border-zinc-200 hover:border-emerald-500/50 hover:bg-zinc-50"
               )}
             >
               <input ref={fileInputRef} type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
               {uploading ? (
                 <div className="flex flex-col items-center gap-2">
-                  <Loader2 className="h-8 w-8 text-[#6C47FF] animate-spin" />
+                  <Loader2 className="h-8 w-8 text-emerald-500 animate-spin" />
                   <p className="text-sm text-[#6B7280]">Uploading...</p>
                 </div>
               ) : (
                 <div className="flex flex-col items-center gap-2">
-                  <div className="w-10 h-10 rounded-full bg-[#F5F2FF] flex items-center justify-center">
-                    <Upload className="h-5 w-5 text-[#6C47FF]" />
+                  <div className="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center">
+                    <Upload className="h-5 w-5 text-emerald-500" />
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-[#111827]">Drop image here or <span className="text-[#6C47FF]">browse</span></p>
+                    <p className="text-sm font-medium text-zinc-900">Drop image here or <span className="text-emerald-500">browse</span></p>
                     <p className="text-xs text-[#6B7280] mt-0.5">PNG, JPG, WebP up to 5MB</p>
                   </div>
                 </div>
@@ -252,12 +252,12 @@ export function ProductForm({ initialData, mode }: ProductFormProps) {
               onChange={(e) => handleChange("imageUrl", e.target.value)}
               placeholder="https://example.com/image.jpg"
               disabled={loading}
-              className="rounded-xl border-gray-200 focus:border-[#6C47FF] focus:ring-[#6C47FF]/20"
+              className="rounded-xl border-zinc-200 focus:border-emerald-500 focus:ring-emerald-500/20"
             />
           )}
 
           {form.imageUrl && (
-            <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-gray-100 border border-gray-100">
+            <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-zinc-100 border border-zinc-100">
               <Image src={form.imageUrl} alt="Preview" fill className="object-cover" onError={() => handleChange("imageUrl", "")} />
               <button type="button" onClick={() => handleChange("imageUrl", "")} className="absolute top-2 right-2 w-7 h-7 rounded-full bg-black/50 hover:bg-black/70 flex items-center justify-center text-white transition-colors">
                 <X className="h-3.5 w-3.5" />
@@ -265,38 +265,38 @@ export function ProductForm({ initialData, mode }: ProductFormProps) {
             </div>
           )}
           {!form.imageUrl && imageMode === "url" && (
-            <div className="flex items-center justify-center w-full aspect-video rounded-xl bg-gray-50 border border-dashed border-gray-200">
-              <ImageOff className="h-8 w-8 text-gray-300" />
+            <div className="flex items-center justify-center w-full aspect-video rounded-xl bg-zinc-50 border border-dashed border-zinc-200">
+              <ImageOff className="h-8 w-8 text-zinc-300" />
             </div>
           )}
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-1.5">
-            <Label htmlFor="name" className="text-sm font-medium text-[#111827]">Product Name</Label>
+            <Label htmlFor="name" className="text-sm font-medium text-zinc-900">Product Name</Label>
             <Input id="name" value={form.name} onChange={(e) => handleChange("name", e.target.value)} placeholder="e.g. HyperX Cloud III" disabled={loading}
-              className="rounded-xl border-gray-200 focus:border-[#6C47FF] focus:ring-[#6C47FF]/20" />
+              className="rounded-xl border-zinc-200 focus:border-emerald-500 focus:ring-emerald-500/20" />
             {errors.name && <p className="text-xs text-red-500">{errors.name}</p>}
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="brand" className="text-sm font-medium text-[#111827]">Brand</Label>
+            <Label htmlFor="brand" className="text-sm font-medium text-zinc-900">Brand</Label>
             <Input id="brand" value={form.brand} onChange={(e) => handleChange("brand", e.target.value)} placeholder="e.g. Logitech" disabled={loading}
-              className="rounded-xl border-gray-200 focus:border-[#6C47FF] focus:ring-[#6C47FF]/20" />
+              className="rounded-xl border-zinc-200 focus:border-emerald-500 focus:ring-emerald-500/20" />
             {errors.brand && <p className="text-xs text-red-500">{errors.brand}</p>}
           </div>
         </div>
 
         <div className="space-y-1.5">
-          <Label htmlFor="description" className="text-sm font-medium text-[#111827]">Description</Label>
+          <Label htmlFor="description" className="text-sm font-medium text-zinc-900">Description</Label>
           <textarea id="description" value={form.description} onChange={(e) => handleChange("description", e.target.value)} placeholder="Describe the product..." disabled={loading} rows={3}
-            className="flex w-full rounded-xl border border-gray-200 bg-white px-3 py-2.5 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#6C47FF]/20 focus:border-[#6C47FF] disabled:cursor-not-allowed disabled:opacity-50 resize-none transition-colors" />
+            className="flex w-full rounded-xl border border-zinc-200 bg-white px-3 py-2.5 text-sm placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 disabled:cursor-not-allowed disabled:opacity-50 resize-none transition-colors" />
           {errors.description && <p className="text-xs text-red-500">{errors.description}</p>}
         </div>
 
         <div className="space-y-1.5">
-          <Label htmlFor="categoryId" className="text-sm font-medium text-[#111827]">Category</Label>
+          <Label htmlFor="categoryId" className="text-sm font-medium text-zinc-900">Category</Label>
           <select id="categoryId" value={form.categoryId} onChange={(e) => handleChange("categoryId", e.target.value)} disabled={loading || categories.length === 0}
-            className="flex w-full rounded-xl border border-gray-200 bg-white px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#6C47FF]/20 focus:border-[#6C47FF] disabled:opacity-50 transition-colors">
+            className="flex w-full rounded-xl border border-zinc-200 bg-white px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 disabled:opacity-50 transition-colors">
             <option value="">Select a category</option>
             {categories.map((c) => (
               <option key={c.id} value={c.id}>{c.name}</option>
@@ -307,26 +307,26 @@ export function ProductForm({ initialData, mode }: ProductFormProps) {
 
         <div className="grid grid-cols-3 gap-4">
           <div className="space-y-1.5">
-            <Label htmlFor="costPrice" className="text-sm font-medium text-[#111827]">Cost Price ($)</Label>
+            <Label htmlFor="costPrice" className="text-sm font-medium text-zinc-900">Cost Price ($)</Label>
             <Input id="costPrice" type="number" step="0.01" min="0" value={form.costPrice}
               onChange={(e) => handleChange("costPrice", parseFloat(e.target.value) || 0)} disabled={loading}
-              className="rounded-xl border-gray-200 focus:border-[#6C47FF] focus:ring-[#6C47FF]/20" />
-            <p className="text-xs text-gray-400">What you paid for it</p>
+              className="rounded-xl border-zinc-200 focus:border-emerald-500 focus:ring-emerald-500/20" />
+            <p className="text-xs text-zinc-400">What you paid for it</p>
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="price" className="text-sm font-medium text-[#111827]">Selling Price ($)</Label>
+            <Label htmlFor="price" className="text-sm font-medium text-zinc-900">Selling Price ($)</Label>
             <Input id="price" type="number" step="0.01" min="0" value={form.price}
               onChange={(e) => handleChange("price", parseFloat(e.target.value) || 0)} disabled={loading}
-              className="rounded-xl border-gray-200 focus:border-[#6C47FF] focus:ring-[#6C47FF]/20" />
+              className="rounded-xl border-zinc-200 focus:border-emerald-500 focus:ring-emerald-500/20" />
             {errors.price && <p className="text-xs text-red-500">{errors.price}</p>}
           </div>
           <div className="space-y-1.5">
-            <Label className="text-sm font-medium text-[#111827]">Margin</Label>
-            <div className="flex h-10 items-center rounded-xl border border-gray-200 bg-gray-50 px-3 text-sm font-semibold">
+            <Label className="text-sm font-medium text-zinc-900">Margin</Label>
+            <div className="flex h-10 items-center rounded-xl border border-zinc-200 bg-zinc-50 px-3 text-sm font-semibold">
               {margin !== null ? (
                 <span className={cn(Number(margin) >= 0 ? "text-emerald-600" : "text-red-500")}>{margin}%</span>
               ) : (
-                <span className="text-gray-400">—</span>
+                <span className="text-zinc-400">—</span>
               )}
             </div>
           </div>
@@ -334,10 +334,10 @@ export function ProductForm({ initialData, mode }: ProductFormProps) {
 
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-1.5">
-            <Label htmlFor="stock" className="text-sm font-medium text-[#111827]">Stock</Label>
+            <Label htmlFor="stock" className="text-sm font-medium text-zinc-900">Stock</Label>
             <Input id="stock" type="number" min="0" value={form.stock}
               onChange={(e) => handleChange("stock", parseInt(e.target.value) || 0)} disabled={loading}
-              className="rounded-xl border-gray-200 focus:border-[#6C47FF] focus:ring-[#6C47FF]/20" />
+              className="rounded-xl border-zinc-200 focus:border-emerald-500 focus:ring-emerald-500/20" />
             {errors.stock && <p className="text-xs text-red-500">{errors.stock}</p>}
           </div>
           <div className="space-y-1.5 flex items-end pb-1">
@@ -346,7 +346,7 @@ export function ProductForm({ initialData, mode }: ProductFormProps) {
                 <input id="available" type="checkbox" checked={form.available ?? true}
                   onChange={(e) => handleChange("available", e.target.checked)} disabled={loading} className="sr-only" />
                 <div onClick={() => !loading && handleChange("available", !form.available)}
-                  className={cn("w-10 h-6 rounded-full cursor-pointer transition-colors", form.available ? "bg-[#6C47FF]" : "bg-gray-200")}>
+                  className={cn("w-10 h-6 rounded-full cursor-pointer transition-colors", form.available ? "bg-emerald-500" : "bg-zinc-200")}>
                   <div className={cn("w-4 h-4 bg-white rounded-full shadow-sm mt-1 transition-transform", form.available ? "translate-x-5" : "translate-x-1")} />
                 </div>
               </div>
@@ -357,33 +357,33 @@ export function ProductForm({ initialData, mode }: ProductFormProps) {
 
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <Label className="text-sm font-medium text-[#111827]">Specifications</Label>
+            <Label className="text-sm font-medium text-zinc-900">Specifications</Label>
             <Button type="button" variant="outline" size="sm" onClick={addSpec}
-              className="rounded-xl border-gray-200 text-[#6C47FF] hover:bg-[#F5F2FF] text-xs gap-1 h-8">
+              className="rounded-xl border-zinc-200 text-emerald-500 hover:bg-emerald-50 text-xs gap-1 h-8">
               <Plus className="h-3 w-3" /> Add Specification
             </Button>
           </div>
           {specs.length === 0 && (
-            <p className="text-xs text-gray-400 italic">No specifications added yet.</p>
+            <p className="text-xs text-zinc-400 italic">No specifications added yet.</p>
           )}
           {specs.map((spec, i) => (
             <div key={i} className="flex gap-2 items-start">
               <Input value={spec.key} onChange={(e) => updateSpec(i, "key", e.target.value)} placeholder="Key (e.g. Connectivity)" disabled={loading}
-                className="rounded-xl border-gray-200 focus:border-[#6C47FF] focus:ring-[#6C47FF]/20 text-sm flex-1" />
+                className="rounded-xl border-zinc-200 focus:border-emerald-500 focus:ring-emerald-500/20 text-sm flex-1" />
               <Input value={spec.value} onChange={(e) => updateSpec(i, "value", e.target.value)} placeholder="Value (e.g. Bluetooth 5.3)" disabled={loading}
-                className="rounded-xl border-gray-200 focus:border-[#6C47FF] focus:ring-[#6C47FF]/20 text-sm flex-1" />
-              <button type="button" onClick={() => removeSpec(i)} className="w-9 h-9 rounded-xl flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors shrink-0">
+                className="rounded-xl border-zinc-200 focus:border-emerald-500 focus:ring-emerald-500/20 text-sm flex-1" />
+              <button type="button" onClick={() => removeSpec(i)} className="w-9 h-9 rounded-xl flex items-center justify-center text-zinc-400 hover:text-red-500 hover:bg-red-50 transition-colors shrink-0">
                 <Trash2 className="h-4 w-4" />
               </button>
             </div>
           ))}
         </div>
 
-        <div className="flex gap-3 pt-2 border-t border-gray-100">
+        <div className="flex gap-3 pt-2 border-t border-zinc-100">
           <Button type="button" variant="outline" onClick={() => router.back()} disabled={loading}
-            className="rounded-xl border-gray-200 text-[#374151] hover:bg-gray-50">Cancel</Button>
+            className="rounded-xl border-zinc-200 text-[#374151] hover:bg-zinc-50">Cancel</Button>
           <Button type="submit" disabled={loading || uploading}
-            className="flex-1 rounded-xl bg-[#6C47FF] hover:bg-[#5B3AE8] text-white border-0 shadow-sm">
+            className="flex-1 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white border-0 shadow-sm">
             {loading ? (
               <><Loader2 className="h-4 w-4 animate-spin" />{mode === "edit" ? "Updating..." : "Creating..."}</>
             ) : mode === "edit" ? "Update Product" : "Create Product"}

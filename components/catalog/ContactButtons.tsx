@@ -32,10 +32,10 @@ export function ContactButtons() {
   )}`;
 
   return (
-    <section className="bg-slate-900 text-white py-16 px-4">
+    <section className="bg-zinc-900 text-white py-16 px-4">
       <div className="max-w-4xl mx-auto text-center">
-        <h2 className="text-2xl font-bold mb-2">Get in Touch</h2>
-        <p className="text-slate-400 mb-8">
+        <h2 className="text-2xl font-bold mb-2 tracking-tight">Get in Touch</h2>
+        <p className="text-zinc-400 mb-8">
           Questions about a product? We&apos;d love to help!
         </p>
         <div className="flex flex-wrap justify-center gap-4">

@@ -43,13 +43,13 @@ export function ProductGrid({ initialProducts, categories }: ProductGridProps) {
 
   return (
     <div>
-      <div className="flex flex-wrap gap-2 mb-6">
+      <div className="flex flex-wrap gap-2 mb-8">
         <button onClick={() => setCategoryFilter(null)}
           className={cn(
             "px-4 py-1.5 rounded-full text-sm font-medium transition-all border",
             !categoryFilter
-              ? "bg-[#6C47FF] text-white border-[#6C47FF]"
-              : "bg-white text-gray-600 border-gray-200 hover:border-[#6C47FF] hover:text-[#6C47FF]"
+              ? "bg-emerald-500 text-white border-emerald-500 shadow-sm"
+              : "bg-white text-zinc-600 border-zinc-200 hover:border-emerald-300 hover:text-emerald-600 hover:bg-emerald-50/50"
           )}>
           All
         </button>
@@ -58,8 +58,8 @@ export function ProductGrid({ initialProducts, categories }: ProductGridProps) {
             className={cn(
               "px-4 py-1.5 rounded-full text-sm font-medium transition-all border",
               categoryFilter === cat.id
-                ? "bg-[#6C47FF] text-white border-[#6C47FF]"
-                : "bg-white text-gray-600 border-gray-200 hover:border-[#6C47FF] hover:text-[#6C47FF]"
+                ? "bg-emerald-500 text-white border-emerald-500 shadow-sm"
+                : "bg-white text-zinc-600 border-zinc-200 hover:border-emerald-300 hover:text-emerald-600 hover:bg-emerald-50/50"
             )}>
             {cat.name}
           </button>
@@ -67,15 +67,15 @@ export function ProductGrid({ initialProducts, categories }: ProductGridProps) {
       </div>
 
       {products.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-24 text-gray-400">
-          <PackageOpen className="h-14 w-14 mb-4 text-gray-300" />
-          <p className="text-lg font-semibold text-gray-500">No products found</p>
+        <div className="flex flex-col items-center justify-center py-24 text-zinc-400">
+          <PackageOpen className="h-14 w-14 mb-4 text-zinc-300" />
+          <p className="text-lg font-semibold text-zinc-500">No products found</p>
           <p className="text-sm mt-1">
             {searchQuery ? `No results for "${searchQuery}"` : "Check back later for new arrivals."}
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {products.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

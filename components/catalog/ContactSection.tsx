@@ -46,8 +46,8 @@ const contacts = [
     label: "Email",
     description: "Send us an email anytime",
     icon: <Mail className="h-6 w-6" />,
-    color: "bg-[#6C47FF] hover:bg-[#5B3AE8]",
-    iconBg: "bg-[#F5F2FF] text-[#6C47FF]",
+    color: "bg-emerald-500 hover:bg-emerald-600",
+    iconBg: "bg-emerald-50 text-emerald-600",
     getHref: () =>
       `mailto:${contactConfig.email.address}?subject=${encodeURIComponent(contactConfig.email.subject)}`,
   },
@@ -55,16 +55,13 @@ const contacts = [
 
 export function ContactSection() {
   return (
-    <section className="bg-white border-t border-gray-100 py-16 px-4">
+    <section id="contact" className="bg-white border-t border-zinc-200 py-16 px-4">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-10">
-          <h2
-            className="text-2xl font-semibold text-[#111827] mb-2"
-            style={{ letterSpacing: "-0.02em" }}
-          >
+          <h2 className="text-2xl font-semibold text-zinc-900 mb-2 tracking-tight">
             Get in Touch
           </h2>
-          <p className="text-[#6B7280] text-[0.95rem]">
+          <p className="text-zinc-500">
             Have a question about a product? We&apos;d love to hear from you.
           </p>
         </div>
@@ -73,20 +70,20 @@ export function ContactSection() {
           {contacts.map(({ key, label, description, icon, iconBg, color, getHref }) => (
             <div
               key={key}
-              className="bg-[#FAFAFA] rounded-2xl p-6 border border-gray-100 flex flex-col items-center text-center gap-3"
+              className="bg-zinc-50 rounded-2xl p-6 border border-zinc-200 flex flex-col items-center text-center gap-3 transition-colors hover:border-zinc-300"
             >
               <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${iconBg}`}>
                 {icon}
               </div>
               <div>
-                <p className="font-semibold text-[#111827] text-sm">{label}</p>
-                <p className="text-xs text-[#6B7280] mt-0.5">{description}</p>
+                <p className="font-semibold text-zinc-900 text-sm">{label}</p>
+                <p className="text-xs text-zinc-500 mt-0.5">{description}</p>
               </div>
               <a
                 href={getHref()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`mt-1 inline-flex items-center justify-center px-5 py-2 rounded-full text-sm font-medium text-white transition-all ${color}`}
+                className={`mt-1 inline-flex items-center justify-center px-5 py-2 rounded-full text-sm font-medium text-white transition-all active:scale-95 ${color}`}
               >
                 Contact us
               </a>

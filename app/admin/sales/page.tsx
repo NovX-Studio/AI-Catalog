@@ -140,8 +140,8 @@ export default function SalesPage() {
   return (
     <div className="max-w-6xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-[#111827]" style={{ letterSpacing: "-0.02em" }}>Sales</h1>
-        <p className="text-sm text-[#6B7280] mt-0.5">Register and track your product sales.</p>
+        <h1 className="text-2xl font-bold text-zinc-900 tracking-tight">Sales</h1>
+        <p className="text-sm text-zinc-500 mt-0.5">Register and track your product sales.</p>
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
@@ -149,27 +149,27 @@ export default function SalesPage() {
           { label: "Total Revenue", value: `$${totalRevenue.toFixed(2)}`, icon: DollarSign, color: "bg-emerald-50 text-emerald-600" },
           { label: "Total Cost", value: `$${totalCost.toFixed(2)}`, icon: ShoppingCart, color: "bg-red-50 text-red-500" },
           { label: "Net Profit", value: `$${(totalRevenue - totalCost).toFixed(2)}`, icon: TrendingUp, color: (totalRevenue - totalCost) >= 0 ? "bg-emerald-50 text-emerald-600" : "bg-red-50 text-red-500" },
-          { label: "Total Sales", value: sales.length, icon: Package, color: "bg-[#F5F2FF] text-[#6C47FF]" },
+          { label: "Total Sales", value: sales.length, icon: Package, color: "bg-emerald-50 text-emerald-600" },
         ].map(({ label, value, icon: Icon, color }) => (
-          <div key={label} className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
+          <div key={label} className="bg-white rounded-2xl p-5 border border-zinc-200/60 shadow-sm">
             <div className="flex items-center justify-between mb-3">
               <div className={cn("w-9 h-9 rounded-xl flex items-center justify-center", color)}>
                 <Icon className="h-4.5 w-4.5" />
               </div>
             </div>
-            <p className="text-2xl font-bold text-[#111827]" style={{ letterSpacing: "-0.02em" }}>{value}</p>
-            <p className="text-xs text-[#6B7280] mt-0.5 font-medium">{label}</p>
+            <p className="text-2xl font-bold text-zinc-900 tracking-tight">{value}</p>
+            <p className="text-xs text-zinc-500 mt-0.5 font-medium">{label}</p>
           </div>
         ))}
       </div>
 
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-8">
-        <h2 className="text-base font-semibold text-[#111827] mb-4" style={{ letterSpacing: "-0.01em" }}>Register a Sale</h2>
+      <div className="bg-white rounded-2xl border border-zinc-200/60 shadow-sm p-6 mb-8">
+        <h2 className="text-base font-semibold text-zinc-900 mb-4 tracking-tight">Register a Sale</h2>
         <form onSubmit={handleSubmit} className="flex flex-wrap items-end gap-4">
           <div className="space-y-1.5 flex-1 min-w-[200px]">
-            <Label className="text-sm font-medium text-[#111827]">Product</Label>
+            <Label className="text-sm font-medium text-zinc-900">Product</Label>
             <select value={form.productId} onChange={(e) => handleProductChange(e.target.value)}
-              className="flex w-full rounded-xl border border-gray-200 bg-white px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#6C47FF]/20 focus:border-[#6C47FF]">
+              className="flex w-full rounded-xl border border-zinc-200 bg-white px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-400">
               <option value="">Select product</option>
               {products.filter(p => p.stock > 0).map((p) => (
                 <option key={p.id} value={p.id}>{p.name} ({p.brand}) — Stock: {p.stock}</option>
@@ -177,42 +177,42 @@ export default function SalesPage() {
             </select>
           </div>
           <div className="space-y-1.5 w-24">
-            <Label className="text-sm font-medium text-[#111827]">Qty</Label>
+            <Label className="text-sm font-medium text-zinc-900">Qty</Label>
             <Input type="number" min="1" max={selectedProduct?.stock ?? 1} value={form.quantity}
               onChange={(e) => setForm(f => ({ ...f, quantity: parseInt(e.target.value) || 1 }))}
-              className="rounded-xl border-gray-200 focus:border-[#6C47FF] focus:ring-[#6C47FF]/20" />
+              className="rounded-xl border-zinc-200 focus:border-emerald-400 focus:ring-emerald-500/20" />
           </div>
           <div className="space-y-1.5 w-36">
-            <Label className="text-sm font-medium text-[#111827]">Unit Price ($)</Label>
+            <Label className="text-sm font-medium text-zinc-900">Unit Price ($)</Label>
             <Input type="number" step="0.01" min="0" value={form.unitPrice}
               onChange={(e) => setForm(f => ({ ...f, unitPrice: parseFloat(e.target.value) || 0 }))}
-              className="rounded-xl border-gray-200 focus:border-[#6C47FF] focus:ring-[#6C47FF]/20" />
+              className="rounded-xl border-zinc-200 focus:border-emerald-400 focus:ring-emerald-500/20" />
           </div>
           <Button type="submit" disabled={submitting || !form.productId}
-            className="rounded-xl bg-[#6C47FF] hover:bg-[#5B3AE8] text-white border-0 shadow-sm h-10">
+            className="rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white border-0 shadow-sm h-10">
             {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : "Register Sale"}
           </Button>
         </form>
       </div>
 
       <div>
-        <h2 className="text-base font-semibold text-[#111827] mb-4" style={{ letterSpacing: "-0.01em" }}>Sales History</h2>
-        <div className="rounded-2xl border border-gray-100 bg-white overflow-hidden shadow-sm">
+        <h2 className="text-base font-semibold text-zinc-900 mb-4 tracking-tight">Sales History</h2>
+        <div className="rounded-2xl border border-zinc-200/60 bg-white overflow-hidden shadow-sm">
           <Table>
             <TableHeader>
-              <TableRow className="bg-gray-50 hover:bg-gray-50 border-b border-gray-100">
-                <TableHead className="text-xs font-semibold text-[#6B7280] uppercase tracking-wide">Date</TableHead>
-                <TableHead className="text-xs font-semibold text-[#6B7280] uppercase tracking-wide">Product</TableHead>
-                <TableHead className="text-xs font-semibold text-[#6B7280] uppercase tracking-wide">Qty</TableHead>
-                <TableHead className="text-xs font-semibold text-[#6B7280] uppercase tracking-wide">Unit Price</TableHead>
-                <TableHead className="text-xs font-semibold text-[#6B7280] uppercase tracking-wide">Total</TableHead>
-                <TableHead className="text-xs font-semibold text-[#6B7280] uppercase tracking-wide">Profit</TableHead>
+              <TableRow className="bg-zinc-50 hover:bg-zinc-50 border-b border-zinc-100">
+                <TableHead className="text-xs font-semibold text-zinc-500 uppercase tracking-wide">Date</TableHead>
+                <TableHead className="text-xs font-semibold text-zinc-500 uppercase tracking-wide">Product</TableHead>
+                <TableHead className="text-xs font-semibold text-zinc-500 uppercase tracking-wide">Qty</TableHead>
+                <TableHead className="text-xs font-semibold text-zinc-500 uppercase tracking-wide">Unit Price</TableHead>
+                <TableHead className="text-xs font-semibold text-zinc-500 uppercase tracking-wide">Total</TableHead>
+                <TableHead className="text-xs font-semibold text-zinc-500 uppercase tracking-wide">Profit</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {paginatedSales.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={6} className="text-center py-12 text-[#6B7280] text-sm">
+                  <TableCell colSpan={6} className="text-center py-12 text-zinc-500 text-sm">
                     No sales recorded yet.
                   </TableCell>
                 </TableRow>
@@ -221,12 +221,12 @@ export default function SalesPage() {
                   const cost = (sale.product?.costPrice ?? 0) * sale.quantity;
                   const profit = sale.total - cost;
                   return (
-                    <TableRow key={sale.id} className="hover:bg-[#FAFAFA] border-b border-gray-50 last:border-0">
-                      <TableCell className="text-sm text-[#6B7280]">{new Date(sale.createdAt).toLocaleDateString()}</TableCell>
-                      <TableCell className="font-medium text-[#111827] text-sm">{sale.product?.name ?? "Unknown"}</TableCell>
-                      <TableCell className="text-[#374151] text-sm">{sale.quantity}</TableCell>
-                      <TableCell className="text-[#374151] text-sm">${sale.unitPrice.toFixed(2)}</TableCell>
-                      <TableCell className="text-[#374151] text-sm font-medium">${sale.total.toFixed(2)}</TableCell>
+                    <TableRow key={sale.id} className="hover:bg-zinc-50 border-b border-zinc-50 last:border-0">
+                      <TableCell className="text-sm text-zinc-500">{new Date(sale.createdAt).toLocaleDateString()}</TableCell>
+                      <TableCell className="font-medium text-zinc-900 text-sm">{sale.product?.name ?? "Unknown"}</TableCell>
+                      <TableCell className="text-zinc-700 text-sm">{sale.quantity}</TableCell>
+                      <TableCell className="text-zinc-700 text-sm">${sale.unitPrice.toFixed(2)}</TableCell>
+                      <TableCell className="text-zinc-700 text-sm font-medium">${sale.total.toFixed(2)}</TableCell>
                       <TableCell className={cn("text-sm font-medium", profit >= 0 ? "text-emerald-600" : "text-red-500")}>
                         ${profit.toFixed(2)}
                       </TableCell>
@@ -240,7 +240,7 @@ export default function SalesPage() {
         {hasMore && (
           <div className="flex justify-center mt-4">
             <Button variant="outline" onClick={() => setPage(p => p + 1)}
-              className="rounded-xl border-gray-200 text-[#374151]">
+              className="rounded-xl border-zinc-200 text-zinc-700">
               Load More
             </Button>
           </div>

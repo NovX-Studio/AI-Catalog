@@ -34,23 +34,18 @@ export function Sidebar() {
   }
 
   return (
-    <aside className="flex flex-col w-64 bg-[#0F0A1E] text-white min-h-screen">
-      <div className="flex items-center gap-2.5 px-5 py-5 border-b border-white/10">
-        <div
-          className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
-          style={{
-            background: "linear-gradient(135deg, #6C47FF 0%, #7C3AED 100%)",
-          }}
-        >
+    <aside className="flex flex-col w-64 bg-zinc-950 text-white min-h-screen">
+      <div className="flex items-center gap-2.5 px-5 py-5 border-b border-white/5">
+        <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center shrink-0">
           <Package className="h-4 w-4 text-white" />
         </div>
-        <span className="font-bold text-base" style={{ letterSpacing: "-0.02em" }}>
-          AI Catalog
+        <span className="font-bold text-base tracking-tight">
+          Catalyx
         </span>
       </div>
 
       <nav className="flex-1 px-3 py-5 space-y-0.5">
-        <p className="text-[10px] font-semibold uppercase tracking-widest text-white/30 px-3 mb-2">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-white/20 px-3 mb-3">
           Menu
         </p>
         {navItems.map(({ href, label, icon: Icon }) => {
@@ -62,8 +57,8 @@ export function Sidebar() {
               className={cn(
                 "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all",
                 active
-                  ? "bg-[#6C47FF] text-white shadow-lg"
-                  : "text-white/60 hover:bg-white/8 hover:text-white"
+                  ? "bg-emerald-500 text-white shadow-sm"
+                  : "text-white/50 hover:bg-white/5 hover:text-white"
               )}
             >
               <Icon className="h-4 w-4 shrink-0" />
@@ -73,10 +68,10 @@ export function Sidebar() {
         })}
       </nav>
 
-      <div className="px-3 py-4 border-t border-white/10">
+      <div className="px-3 py-4 border-t border-white/5">
         <button
           onClick={handleSignOut}
-          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-white/60 hover:bg-white/8 hover:text-white transition-all"
+          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-white/50 hover:bg-white/5 hover:text-white transition-all"
         >
           <LogOut className="h-4 w-4 shrink-0" />
           Sign Out
